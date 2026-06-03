@@ -1,0 +1,37 @@
+name: Build Chrome Extension ZIP
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checko out repo
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node_version: 20
+      - name: Install Typescript
+        run: npm ci
+      - name: Compile Typescript
+        run: npm run build
+      - name: Prepare extension package
+        run: |
+          mkdir -p package/src
+          cp manifest.json package/
+          cp popup.html package/
+          cp popup.css package/
+          cp src/popup.js package/src/
+          cp -r images package/ || true
+          cp -r _locales package/ || true
+      - name: Create ZIP
+        run: |
+          cd package
+          zip -r ../extension.zip .
+      - name: Upload ZIP artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chrome-extension
+          path: extension.zip
