@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checko out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node_version: 20
+          node_version: 24
       - name: Install Typescript
         run: npm ci
       - name: Compile Typescript
@@ -31,7 +31,7 @@ jobs:
           cd package
           zip -r ../extension.zip .
       - name: Upload ZIP artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: chrome-extension
+          name: extension
           path: extension.zip
