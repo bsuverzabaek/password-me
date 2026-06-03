@@ -30,8 +30,10 @@ jobs:
         run: |
           cd package
           zip -r ../extension.zip .
+      - name: Inspect ZIP
+        run: unzip -l extension.zip
       - name: Upload ZIP artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: extension
           path: extension.zip
