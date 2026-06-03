@@ -17,19 +17,14 @@ jobs:
         run: npm ci
       - name: Compile Typescript
         run: npm run build
-      - name: Prepare extension package
-        run: |
-          mkdir -p package/src
-          cp manifest.json package/
-          cp popup.html package/
-          cp popup.css package/
-          cp src/popup.js package/src/
-          cp -r images package/ || true
-          cp -r _locales package/ || true
       - name: Create ZIP
         run: |
-          cd package
-          zip -r ../extension.zip .
+          zip -r extension.zip . -i "manifest.json" \
+          "popup.html" \
+          "popup.css" \
+          "src/popup.js" \
+          "images" \
+          "_locales"
       - name: Inspect ZIP
         run: unzip -l extension.zip
       - name: Upload ZIP artifact
