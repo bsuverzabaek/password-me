@@ -12,7 +12,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
-          node_version: 24
+          node-version: 24
       - name: Install Typescript
         run: npm ci
       - name: Compile Typescript
