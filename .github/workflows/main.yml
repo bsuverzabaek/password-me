@@ -1,6 +1,19 @@
 name: Upload Chrome Extension ZIP to Web Store
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'manifest.json'
+      - 'popup.html'
+      - 'popup.css'
+      - 'src/popup.ts'
+      - 'images/**'
+      - '_locales/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'tsconfig.json'
   workflow_dispatch:
 
 permissions: 
