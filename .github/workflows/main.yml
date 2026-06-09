@@ -35,3 +35,12 @@ jobs:
           "src/popup.js" \
           "images/*" \
           "_locales/*"
+      - name: Upload extension to Chrome Developer Dashboard
+        uses: mobilefirstllc/cws-publish@569e87bc9a54ad7712ba6dc154a110d88af63b85 #v2.1.1
+        with:
+          action: 'upload'
+          client_id: ${{ secrets.CLIENT_ID }}
+          client_secret: ${{ secrets.CLIENT_SECRET }}
+          refresh_token: ${{ secrets.REFRESH_TOKEN }}
+          extension_id: ${{ secrets.EXTENSION_ID }}
+          zip_file: ./extension.zip
