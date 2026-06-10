@@ -1,6 +1,6 @@
 {
   "extName":            { "message": "パスワードジェネレーター" },
-  "extDescription":     { "message": "crypto.getRandomValues() を使ってパスワードをローカルで安全に生成します" },
+  "extDescription":     { "message": "暗号学的に安全なパスワードを生成します" },
   "extActionTitle":     { "message": "パスワードジェネレーター" },
   "headingTitle":       { "message": "パスワードジェネレーター" },
   "copyToClipboard":    { "message": "クリップボードにコピー" },
