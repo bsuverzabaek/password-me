@@ -4,10 +4,46 @@
   padding: 0;
 }
 
+:root {
+  --bg: #0a0e1a;
+  --surface: #0f1628;
+  --border: #1e2d4a;
+  --text: #e0eaff;
+  --text-muted: #7090b0;
+  --text-subtle: #4a6a8a;
+  --accent: #38bdf8;
+  --btn: #0ea5e9;
+  --btn-hover: #0284c7;
+  --icon-hover-bg: #162035;
+  --checkbox-border: #2a3d5a;
+  --sample: #2a4060;
+  --feedback: #22d3ee;
+  --checkmark: #0a0e1a;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f0f6ff;
+    --surface: #ffffff;
+    --border: #bdd4ed;
+    --text: #0f1e3a;
+    --text-muted: #4a6a90;
+    --text-subtle: #8aaccc;
+    --accent: #0369a1;
+    --btn: #0ea5e9;
+    --btn-hover: #0284c7;
+    --icon-hover-bg: #deeeff;
+    --checkbox-border: #a0c0e0;
+    --sample: #b0cce0;
+    --feedback: #0891b2;
+    --checkmark: #ffffff;
+  }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #0f0f13;
-  color: #e2e2e8;
+  background: var(--bg);
+  color: var(--text);
   width: 340px;
   min-height: 320px;
 }
@@ -23,7 +59,7 @@ h1 {
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.4px;
-  color: #a78bfa;
+  color: var(--accent);
 }
 
 /* Output */
@@ -36,8 +72,8 @@ h1 {
 .password-display {
   display: flex;
   align-items: center;
-  background: #1a1a24;
-  border: 1px solid #2e2e3e;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px 12px;
   gap: 8px;
@@ -49,7 +85,7 @@ h1 {
   font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
   font-variant-ligatures: none;
   font-size: 13px;
-  color: #e2e2e8;
+  color: var(--text);
   word-break: break-all;
   line-height: 1.5;
   cursor: default;
@@ -60,7 +96,7 @@ h1 {
   background: none;
   border: none;
   cursor: pointer;
-  color: #6b6b8a;
+  color: var(--text-subtle);
   padding: 4px;
   border-radius: 4px;
   display: flex;
@@ -70,8 +106,8 @@ h1 {
 }
 
 .icon-btn:hover:not(:disabled) {
-  color: #a78bfa;
-  background: #2a2a3a;
+  color: var(--accent);
+  background: var(--icon-hover-bg);
 }
 
 .icon-btn:disabled {
@@ -81,7 +117,7 @@ h1 {
 
 .copy-feedback {
   font-size: 11px;
-  color: #34d399;
+  color: var(--feedback);
   min-height: 14px;
   padding-left: 2px;
   transition: opacity 0.3s;
@@ -90,7 +126,7 @@ h1 {
 /* Strength bar */
 .strength-bar-wrapper {
   height: 4px;
-  background: #1a1a24;
+  background: var(--surface);
   border-radius: 2px;
   overflow: hidden;
 }
@@ -104,7 +140,7 @@ h1 {
 
 .strength-label {
   font-size: 11px;
-  color: #6b6b8a;
+  color: var(--text-subtle);
   min-height: 14px;
 }
 
@@ -120,14 +156,14 @@ h1 {
   align-items: center;
   justify-content: space-between;
   font-size: 13px;
-  color: #9090aa;
+  color: var(--text-muted);
   cursor: pointer;
   padding: 4px 0;
   user-select: none;
 }
 
 .options-header:hover {
-  color: #a78bfa;
+  color: var(--accent);
 }
 
 .options-chevron {
@@ -161,7 +197,7 @@ h1 {
 
 .length-row label {
   font-size: 13px;
-  color: #9090aa;
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 
@@ -176,7 +212,7 @@ input[type="range"] {
   flex: 1;
   height: 4px;
   appearance: none;
-  background: #2e2e3e;
+  background: var(--border);
   border-radius: 2px;
   outline: none;
   cursor: pointer;
@@ -187,7 +223,7 @@ input[type="range"]::-webkit-slider-thumb {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #a78bfa;
+  background: var(--accent);
   cursor: pointer;
   transition: transform 0.1s;
 }
@@ -198,10 +234,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 input[type="number"] {
   width: 48px;
-  background: #1a1a24;
-  border: 1px solid #2e2e3e;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 6px;
-  color: #e2e2e8;
+  color: var(--text);
   font-size: 13px;
   text-align: center;
   padding: 4px 6px;
@@ -216,7 +252,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 input[type="number"]:focus {
-  border-color: #a78bfa;
+  border-color: var(--accent);
 }
 
 /* Checkboxes */
@@ -240,12 +276,12 @@ input[type="number"]:focus {
 
 .symbols-label {
   font-size: 13px;
-  color: #9090aa;
+  color: var(--text-muted);
 }
 
 .checkbox-label input[type="checkbox"]:indeterminate + .checkbox-custom {
-  background: #a78bfa;
-  border-color: #a78bfa;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .checkbox-label input[type="checkbox"]:indeterminate + .checkbox-custom::after {
@@ -255,7 +291,7 @@ input[type="number"]:focus {
   top: 6px;
   width: 8px;
   height: 2px;
-  background: #0f0f13;
+  background: var(--checkmark);
 }
 
 .symbols-grid {
@@ -271,7 +307,7 @@ input[type="number"]:focus {
   gap: 4px;
   font-size: 12px;
   font-family: monospace;
-  color: #9090aa;
+  color: var(--text-muted);
   cursor: pointer;
   user-select: none;
 }
@@ -281,7 +317,7 @@ input[type="number"]:focus {
 }
 
 .symbol-item:hover .checkbox-custom {
-  border-color: #a78bfa;
+  border-color: var(--accent);
 }
 
 .checkbox-label {
@@ -289,7 +325,7 @@ input[type="number"]:focus {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #9090aa;
+  color: var(--text-muted);
   cursor: pointer;
   user-select: none;
 }
@@ -301,9 +337,9 @@ input[type="number"]:focus {
 .checkbox-custom {
   width: 16px;
   height: 16px;
-  border: 1.5px solid #3e3e54;
+  border: 1.5px solid var(--checkbox-border);
   border-radius: 4px;
-  background: #1a1a24;
+  background: var(--surface);
   flex-shrink: 0;
   transition: background 0.15s, border-color 0.15s;
   position: relative;
@@ -311,8 +347,8 @@ input[type="number"]:focus {
 
 .checkbox-label input[type="checkbox"]:checked + .checkbox-custom,
 .symbol-item input[type="checkbox"]:checked + .checkbox-custom {
-  background: #a78bfa;
-  border-color: #a78bfa;
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after,
@@ -323,18 +359,18 @@ input[type="number"]:focus {
   top: 1px;
   width: 5px;
   height: 9px;
-  border: 2px solid #0f0f13;
+  border: 2px solid var(--checkmark);
   border-top: none;
   border-left: none;
   transform: rotate(45deg);
 }
 
 .checkbox-label:hover .checkbox-custom {
-  border-color: #a78bfa;
+  border-color: var(--accent);
 }
 
 .sample {
-  color: #4e4e6a;
+  color: var(--sample);
   font-size: 11px;
   font-family: monospace;
 }
@@ -343,7 +379,7 @@ input[type="number"]:focus {
 .generate-btn {
   width: 100%;
   padding: 10px;
-  background: #7c3aed;
+  background: var(--btn);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -355,7 +391,7 @@ input[type="number"]:focus {
 }
 
 .generate-btn:hover {
-  background: #6d28d9;
+  background: var(--btn-hover);
 }
 
 .generate-btn:active {
