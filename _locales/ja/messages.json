@@ -1,8 +1,8 @@
 {
-  "extName":            { "message": "パスワードジェネレーター" },
+  "extName":            { "message": "パスワードミー" },
   "extDescription":     { "message": "暗号学的に安全なパスワードを生成します" },
-  "extActionTitle":     { "message": "パスワードジェネレーター" },
-  "headingTitle":       { "message": "パスワードジェネレーター" },
+  "extActionTitle":     { "message": "パスワードミー" },
+  "headingTitle":       { "message": "パスワードミー" },
   "copyToClipboard":    { "message": "クリップボードにコピー" },
   "clickToCopy":        { "message": "クリックしてコピー" },
   "labelLength":        { "message": "文字数" },

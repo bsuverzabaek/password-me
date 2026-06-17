@@ -1,8 +1,8 @@
 {
-  "extName":            { "message": "Password Generator" },
+  "extName":            { "message": "Password Me" },
   "extDescription":     { "message": "Generate cryptographically secure passwords" },
-  "extActionTitle":     { "message": "Password Generator" },
-  "headingTitle":       { "message": "Password Generator" },
+  "extActionTitle":     { "message": "Password Me" },
+  "headingTitle":       { "message": "Password Me" },
   "copyToClipboard":    { "message": "Copy to clipboard" },
   "clickToCopy":        { "message": "Click to copy" },
   "labelLength":        { "message": "Length" },
