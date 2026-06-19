@@ -200,6 +200,41 @@ function clearCopyFeedback(): void {
   copyFeedback.style.color = "";
 }
 
+function saveSettings(): void {
+  const settings = {
+    length: parseInt(lengthSlider.value, 10),
+    uppercase: cbUppercase.checked,
+    lowercase: cbLowercase.checked,
+    numbers: cbNumbers.checked,
+    symbols: symbolCheckboxes.filter(cb => cb.checked).map(cb => cb.dataset.symbol!),
+    fullwidth: cbFullWidth.checked,
+  };
+  localStorage.setItem("settings", JSON.stringify(settings));
+}
+
+function loadSettings(): void {
+  const raw = localStorage.getItem("settings");
+  const s = raw ? JSON.parse(raw) : null;
+  if (s) {
+    const len = clampLength(s.length ?? 16);
+    lengthSlider.value = String(len);
+    lengthNumber.value = String(len);
+    cbUppercase.checked = s.uppercase ?? true;
+    cbLowercase.checked = s.lowercase ?? true;
+    cbNumbers.checked = s.numbers ?? true;
+    cbFullWidth.checked = s.fullwidth ?? false;
+    if (Array.isArray(s.symbols)) {
+      const enabled = new Set<string>(s.symbols);
+      symbolCheckboxes.forEach(cb => { cb.checked = enabled.has(cb.dataset.symbol!); });
+    }
+    syncSymbolsAll();
+  } else {
+    if (cbSymbolsAll.checked) symbolCheckboxes.forEach(cb => { cb.checked = true; });
+  }
+  applyI18n();
+  generate();
+}
+
 // ── Event listeners ──────────────────────────────────────────────────────────
 
 generateBtn.addEventListener("click", generate);
@@ -212,6 +247,7 @@ lengthSlider.addEventListener("input", () => {
   lengthNumber.value = lengthSlider.value;
   updateStrengthUI(getOptions());
   generate();
+  saveSettings();
 });
 
 lengthNumber.addEventListener("change", () => {
@@ -220,12 +256,14 @@ lengthNumber.addEventListener("change", () => {
   lengthSlider.value = String(clamped);
   updateStrengthUI(getOptions());
   generate();
+  saveSettings();
 });
 
 [cbUppercase, cbLowercase, cbNumbers].forEach((cb) => {
   cb.addEventListener("change", () => {
     updateStrengthUI(getOptions());
     generate();
+    saveSettings();
   });
 });
 
@@ -234,6 +272,7 @@ symbolCheckboxes.forEach((cb) => {
     syncSymbolsAll();
     updateStrengthUI(getOptions());
     generate();
+    saveSettings();
   });
 });
 
@@ -241,6 +280,7 @@ cbSymbolsAll.addEventListener("change", () => {
   symbolCheckboxes.forEach((cb) => { cb.checked = cbSymbolsAll.checked; });
   updateStrengthUI(getOptions());
   generate();
+  saveSettings();
 });
 
 cbFullWidth.addEventListener("change", () => {
@@ -248,6 +288,7 @@ cbFullWidth.addEventListener("change", () => {
   passwordOutput.textContent = currentPassword || "—";
   copyBtn.disabled = currentPassword.length === 0;
   clearCopyFeedback();
+  saveSettings();
 });
 
 copyBtn.addEventListener("click", async () => {
@@ -267,9 +308,4 @@ copyBtn.addEventListener("click", async () => {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 
-if (cbSymbolsAll.checked) {
-  symbolCheckboxes.forEach((cb) => { cb.checked = true; });
-}
-
-applyI18n();
-generate();
+loadSettings();
