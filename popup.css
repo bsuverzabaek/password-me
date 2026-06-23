@@ -375,6 +375,83 @@ input[type="number"]:focus {
   font-family: monospace;
 }
 
+/* Tabs */
+.tab-bar {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-btn {
+  flex: 1;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  user-select: none;
+}
+
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.tab-btn:hover:not(.active) {
+  color: var(--text);
+}
+
+.tab-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* History */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  gap: 8px;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+.history-item:hover {
+  opacity: 0.9;
+}
+
+.history-text {
+  flex: 1;
+  font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+  font-variant-ligatures: none;
+  font-size: 11px;
+  color: var(--text);
+  word-break: break-all;
+  line-height: 1.4;
+  user-select: all;
+}
+
+.history-empty {
+  font-size: 13px;
+  color: var(--text-subtle);
+  text-align: center;
+  padding: 24px 0;
+}
+
 /* Generate button */
 .generate-btn {
   width: 100%;

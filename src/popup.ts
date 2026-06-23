@@ -13,6 +13,9 @@ const FALLBACKS: Record<string, string> = {
   strengthInfo:       "~$1 bits of entropy",
   copied:             "Copied!",
   copyFailed:         "Copy failed — select manually",
+  tabGenerator:       "Generator",
+  tabHistory:         "History",
+  historyEmpty:       "No history yet.",
 };
 
 function i18n(key: string, subs?: string[]): string {
@@ -144,12 +147,18 @@ const strengthBar = document.getElementById("strength-bar") as HTMLDivElement;
 const strengthLabel = document.getElementById("strength-label") as HTMLDivElement;
 const optionsSection = document.querySelector(".options") as HTMLDivElement;
 const optionsHeader = document.querySelector(".options-header") as HTMLDivElement;
+const historyList = document.getElementById("history-list") as HTMLDivElement;
+const historyEmpty = document.getElementById("history-empty") as HTMLDivElement;
+const tabBtns = Array.from(document.querySelectorAll<HTMLButtonElement>(".tab-btn"));
+const generatorPanel = document.getElementById("tab-generator") as HTMLDivElement;
+const historyPanel = document.getElementById("tab-history") as HTMLDivElement;
 
 // ── State ───────────────────────────────────────────────────────────────────
 
 let rawPassword = "";
 let currentPassword = "";
-let copyFeedbackTimer: ReturnType<typeof setTimeout> | null = null;
+const feedbackTimers = new Map<HTMLElement, ReturnType<typeof setTimeout>>();
+let passwordHistory: string[] = [];
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -180,6 +189,11 @@ function updateStrengthUI(opts: PasswordOptions): void {
 
 function generate(): void {
   const opts = getOptions();
+  if (currentPassword) {
+    passwordHistory = [currentPassword, ...passwordHistory].slice(0, 5);
+    saveHistory();
+    renderHistory();
+  }
   rawPassword = generatePassword(opts);
   currentPassword = cbFullWidth.checked ? toFullWidth(rawPassword) : rawPassword;
   passwordOutput.textContent = currentPassword || "—";
@@ -195,9 +209,67 @@ function syncSymbolsAll(): void {
 }
 
 function clearCopyFeedback(): void {
-  if (copyFeedbackTimer !== null) clearTimeout(copyFeedbackTimer);
+  const t = feedbackTimers.get(copyFeedback);
+  if (t !== undefined) { clearTimeout(t); feedbackTimers.delete(copyFeedback); }
   copyFeedback.textContent = "";
   copyFeedback.style.color = "";
+}
+
+async function copyPassword(text: string, feedbackEl: HTMLElement): Promise<void> {
+  const t = feedbackTimers.get(feedbackEl);
+  if (t !== undefined) { clearTimeout(t); feedbackTimers.delete(feedbackEl); }
+  feedbackEl.textContent = "";
+  feedbackEl.style.color = "";
+  try {
+    await navigator.clipboard.writeText(text);
+    feedbackEl.textContent = i18n("copied");
+    feedbackTimers.set(feedbackEl, setTimeout(() => {
+      feedbackEl.textContent = "";
+      feedbackTimers.delete(feedbackEl);
+    }, 2000));
+  } catch {
+    feedbackEl.textContent = i18n("copyFailed");
+    feedbackEl.style.color = "#f87171";
+  }
+}
+
+function saveHistory(): void {
+  localStorage.setItem("passwordHistory", JSON.stringify(passwordHistory));
+}
+
+function loadHistory(): void {
+  const raw = localStorage.getItem("passwordHistory");
+  passwordHistory = raw ? JSON.parse(raw) : [];
+}
+
+function renderHistory(): void {
+  historyList.innerHTML = "";
+  if (passwordHistory.length === 0) {
+    historyEmpty.style.display = "";
+    return;
+  }
+  historyEmpty.style.display = "none";
+  passwordHistory.forEach((pw) => {
+    const entry = document.createElement("div");
+    entry.className = "history-entry";
+    const row = document.createElement("div");
+    row.className = "history-item";
+    const text = document.createElement("span");
+    text.className = "history-text";
+    text.textContent = pw;
+    const btn = document.createElement("button");
+    btn.className = "icon-btn";
+    btn.title = i18n("copyToClipboard");
+    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+    const feedback = document.createElement("div");
+    feedback.className = "copy-feedback";
+    btn.addEventListener("click", () => copyPassword(pw, feedback));
+    row.appendChild(text);
+    row.appendChild(btn);
+    entry.appendChild(row);
+    entry.appendChild(feedback);
+    historyList.appendChild(entry);
+  });
 }
 
 function saveSettings(): void {
@@ -231,6 +303,8 @@ function loadSettings(): void {
   } else {
     if (cbSymbolsAll.checked) symbolCheckboxes.forEach(cb => { cb.checked = true; });
   }
+  loadHistory();
+  renderHistory();
   applyI18n();
   generate();
 }
@@ -238,6 +312,14 @@ function loadSettings(): void {
 // ── Event listeners ──────────────────────────────────────────────────────────
 
 generateBtn.addEventListener("click", generate);
+
+tabBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    tabBtns.forEach(b => b.classList.toggle("active", b === btn));
+    generatorPanel.style.display = btn.dataset.tab === "generator" ? "" : "none";
+    historyPanel.style.display = btn.dataset.tab === "history" ? "" : "none";
+  });
+});
 
 optionsHeader.addEventListener("click", () => {
   optionsSection.classList.toggle("expanded");
@@ -293,17 +375,7 @@ cbFullWidth.addEventListener("change", () => {
 
 copyBtn.addEventListener("click", async () => {
   if (!currentPassword) return;
-  try {
-    await navigator.clipboard.writeText(currentPassword);
-    clearCopyFeedback();
-    copyFeedback.textContent = i18n("copied");
-    copyFeedbackTimer = setTimeout(() => {
-      copyFeedback.textContent = "";
-    }, 2000);
-  } catch {
-    copyFeedback.textContent = i18n("copyFailed");
-    copyFeedback.style.color = "#f87171";
-  }
+  copyPassword(currentPassword, copyFeedback);
 });
 
 // ── Init ─────────────────────────────────────────────────────────────────────

@@ -25,6 +25,9 @@
       "bits": { "content": "$1", "example": "72" }
     }
   },
+  "tabGenerator": { "message": "生成" },
+  "tabHistory": { "message": "履歴" },
+  "historyEmpty": { "message": "履歴はまだありません" },
   "copied":    { "message": "コピーしました！" },
   "copyFailed": { "message": "コピーに失敗しました — 手動でコピーしてください" }
 }

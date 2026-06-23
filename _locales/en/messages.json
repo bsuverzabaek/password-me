@@ -25,6 +25,9 @@
       "bits": { "content": "$1", "example": "72" }
     }
   },
+  "tabGenerator": { "message": "Generator" },
+  "tabHistory": { "message": "History" },
+  "historyEmpty": { "message": "No history yet." },
   "copied":    { "message": "Copied!" },
   "copyFailed": { "message": "Copy failed — select manually" }
 }
