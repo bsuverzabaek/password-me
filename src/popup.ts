@@ -327,8 +327,6 @@ optionsHeader.addEventListener("click", () => {
 
 lengthSlider.addEventListener("input", () => {
   lengthNumber.value = lengthSlider.value;
-  updateStrengthUI(getOptions());
-  generate();
   saveSettings();
 });
 
@@ -336,15 +334,11 @@ lengthNumber.addEventListener("change", () => {
   const clamped = clampLength(parseInt(lengthNumber.value, 10));
   lengthNumber.value = String(clamped);
   lengthSlider.value = String(clamped);
-  updateStrengthUI(getOptions());
-  generate();
   saveSettings();
 });
 
 [cbUppercase, cbLowercase, cbNumbers].forEach((cb) => {
   cb.addEventListener("change", () => {
-    updateStrengthUI(getOptions());
-    generate();
     saveSettings();
   });
 });
@@ -352,16 +346,12 @@ lengthNumber.addEventListener("change", () => {
 symbolCheckboxes.forEach((cb) => {
   cb.addEventListener("change", () => {
     syncSymbolsAll();
-    updateStrengthUI(getOptions());
-    generate();
     saveSettings();
   });
 });
 
 cbSymbolsAll.addEventListener("change", () => {
   symbolCheckboxes.forEach((cb) => { cb.checked = cbSymbolsAll.checked; });
-  updateStrengthUI(getOptions());
-  generate();
   saveSettings();
 });
 
