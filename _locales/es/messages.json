@@ -1,0 +1,33 @@
+{
+  "extName":            { "message": "Password Me" },
+  "extDescription":     { "message": "Genera contraseñas criptográficamente seguras" },
+  "extActionTitle":     { "message": "Password Me" },
+  "headingTitle":       { "message": "Password Me" },
+  "copyToClipboard":    { "message": "Copiar al portapapeles" },
+  "clickToCopy":        { "message": "Haz clic para copiar" },
+  "labelLength":        { "message": "Longitud" },
+  "btnGenerate":        { "message": "Generar" },
+  "optionsLabel":       { "message": "Opciones" },
+  "cbUppercase":        { "message": "Mayúsculas" },
+  "cbLowercase":        { "message": "Minúsculas" },
+  "cbNumbers":          { "message": "Números" },
+  "cbFullWidth":        { "message": "Ancho completo" },
+  "symbolsLabel":       { "message": "Símbolos" },
+  "symbolsAll":         { "message": "Todos" },
+  "strengthVeryWeak":   { "message": "Muy débil" },
+  "strengthWeak":       { "message": "Débil" },
+  "strengthFair":       { "message": "Regular" },
+  "strengthStrong":     { "message": "Fuerte" },
+  "strengthVeryStrong": { "message": "Muy fuerte" },
+  "strengthInfo": {
+    "message": "≈$BITS$ bits de entropía",
+    "placeholders": {
+      "bits": { "content": "$1", "example": "72" }
+    }
+  },
+  "tabGenerator": { "message": "Generador" },
+  "tabHistory": { "message": "Historial" },
+  "historyEmpty": { "message": "Sin historial aún." },
+  "copied":    { "message": "¡Copiado!" },
+  "copyFailed": { "message": "No se pudo copiar. Selecciónalo manualmente" }
+}
